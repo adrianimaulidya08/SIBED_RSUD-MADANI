@@ -69,6 +69,9 @@
 }
 
 .badge-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1rem;
 }
 
@@ -104,6 +107,9 @@
 }
 
 .admin-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.6rem 1.25rem;
   background: transparent;
   border: 1px solid transparent;
@@ -114,6 +120,15 @@
   cursor: pointer;
   transition: all 0.25s ease;
   font-family: inherit;
+}
+
+.admin-tab svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.admin-tab:hover svg {
+  transform: scale(1.1);
 }
 
 .admin-tab:hover {
@@ -204,10 +219,18 @@
 }
 
 .column-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
+}
+
+.column-header h2 svg {
+  color: var(--primary, #3b82f6);
+  flex-shrink: 0;
 }
 
 .count-badge {
@@ -247,6 +270,25 @@
   padding: 3rem 1rem;
   color: var(--text-muted);
   text-align: center;
+}
+
+.placeholder-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.08));
+  border: 1px dashed rgba(59, 130, 246, 0.2);
+  margin-bottom: 1rem;
+  color: rgba(59, 130, 246, 0.4);
+  animation: placeholderPulse 3s ease-in-out infinite;
+}
+
+@keyframes placeholderPulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.05); opacity: 1; }
 }
 
 .column-placeholder span {
@@ -399,7 +441,18 @@
 }
 
 .item-icon {
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.item-icon svg {
   flex-shrink: 0;
 }
 
@@ -455,11 +508,14 @@
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  padding: 0.2rem 0.35rem;
+  padding: 0.3rem 0.4rem;
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
   opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .toggle-mini-btn:hover {
@@ -516,10 +572,18 @@
 }
 
 .users-panel-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
+}
+
+.users-panel-header h2 svg {
+  color: var(--primary, #3b82f6);
+  flex-shrink: 0;
 }
 
 /* Users Table */

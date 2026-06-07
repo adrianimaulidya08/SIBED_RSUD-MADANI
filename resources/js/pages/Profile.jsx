@@ -76,8 +76,8 @@ export default function Profile() {
       <div className="profile-container">
         {/* Back button */}
         <button className="profile-back" onClick={() => navigate('/')}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
           </svg>
           <span>Kembali ke Dashboard</span>
         </button>
@@ -91,7 +91,7 @@ export default function Profile() {
             <h1>{user?.name}</h1>
             <div className="profile-meta">
               <span className="profile-role-badge">{roleLabels[user?.role] || user?.role}</span>
-              {user?.room && <span className="profile-room">🏥 {user.room.name}</span>}
+              {user?.room && <span className="profile-room"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> {user.room.name}</span>}
             </div>
             <span className="profile-username">@{user?.username}</span>
           </div>
@@ -116,10 +116,15 @@ export default function Profile() {
         {/* Card: Ubah Nama */}
         <div className="profile-card">
           <div className="profile-card-header">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <h2>Ubah Nama</h2>
+            <span className="card-icon icon-blue">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <div className="card-header-text">
+              <h2>Ubah Nama</h2>
+              <p className="profile-card-desc">Nama ini akan ditampilkan di seluruh sistem.</p>
+            </div>
           </div>
-          <p className="profile-card-desc">Nama ini akan ditampilkan di seluruh sistem.</p>
+
           <form onSubmit={handleSaveName} className="profile-form">
             <div className="profile-field">
               <label htmlFor="profile-name">Nama Lengkap</label>
@@ -136,10 +141,15 @@ export default function Profile() {
         {/* Card: Ubah Password */}
         <div className="profile-card">
           <div className="profile-card-header">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <h2>Ubah Password</h2>
+            <span className="card-icon icon-amber">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <div className="card-header-text">
+              <h2>Ubah Password</h2>
+              <p className="profile-card-desc">Masukkan password lama dan password baru Anda.</p>
+            </div>
           </div>
-          <p className="profile-card-desc">Masukkan password lama dan password baru Anda.</p>
+
           <form onSubmit={handleChangePassword} className="profile-form">
             <div className="profile-field">
               <label htmlFor="current-pw">Password Lama</label>
@@ -170,14 +180,18 @@ export default function Profile() {
         {/* Card: Info Akun */}
         <div className="profile-card info-card">
           <div className="profile-card-header">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            <h2>Informasi Akun</h2>
+            <span className="card-icon icon-green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </span>
+            <div className="card-header-text">
+              <h2>Informasi Akun</h2>
+            </div>
           </div>
           <div className="info-grid">
-            <div className="info-row"><span className="info-label">Username</span><span className="info-val">{user?.username}</span></div>
-            <div className="info-row"><span className="info-label">Role</span><span className="info-val">{roleLabels[user?.role] || user?.role}</span></div>
-            <div className="info-row"><span className="info-label">Ruangan</span><span className="info-val">{user?.room?.name || '-'}</span></div>
-            <div className="info-row"><span className="info-label">Status</span><span className="info-val status-active">Aktif</span></div>
+            <div className="info-row"><span className="info-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Username</span><span className="info-val mono">{user?.username}</span></div>
+            <div className="info-row"><span className="info-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Role</span><span className="info-val">{roleLabels[user?.role] || user?.role}</span></div>
+            <div className="info-row"><span className="info-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Ruangan</span><span className="info-val">{user?.room?.name || '-'}</span></div>
+            <div className="info-row"><span className="info-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Status</span><span className="info-val status-active"><span className="status-dot"></span>Aktif</span></div>
           </div>
         </div>
 
