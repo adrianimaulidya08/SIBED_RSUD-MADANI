@@ -24,6 +24,7 @@ class User extends Authenticatable
         'username',
         'password',
         'role',
+        'is_active',
         'room_id',
     ];
 
@@ -46,6 +47,7 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
     }
 
@@ -79,5 +81,13 @@ class User extends Authenticatable
     public function isRegular(): bool
     {
         return $this->role === 'regular';
+    }
+
+    /**
+     * Check if user is active.
+     */
+    public function isActive(): bool
+    {
+        return $this->is_active === true;
     }
 }

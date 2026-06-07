@@ -166,7 +166,7 @@ class AdminController extends Controller
      */
     public function indexUsers(): JsonResponse
     {
-        $users = User::with('room')->get();
+        $users = User::with('room')->where('role', '!=', 'admin')->get();
         return response()->json($users);
     }
 
@@ -179,11 +179,24 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6',
-            'role' => 'required|in:admin,intensive,regular',
+            'role' => 'required|in:intensive,regular',
             'room_id' => 'nullable|exists:rooms,id',
         ]);
 
+        // Check if room already has a petugas
+        if (!empty($validated['room_id'])) {
+            $existing = User::where('room_id', $validated['room_id'])
+                            ->where('role', '!=', 'admin')
+                            ->exists();
+            if ($existing) {
+                return response()->json([
+                    'message' => 'Ruangan ini sudah memiliki petugas.'
+                ], 422);
+            }
+        }
+
         $validated['password'] = Hash::make($validated['password']);
+        $validated['is_active'] = true;
 
         $user = User::create($validated);
 
@@ -199,8 +212,9 @@ class AdminController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'username' => 'sometimes|required|string|max:255|unique:users,username,' . $user->id,
             'password' => 'sometimes|nullable|string|min:6',
-            'role' => 'sometimes|required|in:admin,intensive,regular',
+            'role' => 'sometimes|required|in:intensive,regular',
             'room_id' => 'nullable|exists:rooms,id',
+            'is_active' => 'sometimes|boolean',
         ]);
 
         if (isset($validated['password']) && $validated['password']) {
@@ -221,5 +235,23 @@ class AdminController extends Controller
     {
         $user->delete();
         return response()->json(['message' => 'User berhasil dihapus.']);
+    }
+
+    /**
+     * Toggle user active status.
+     */
+    public function toggleUserActive(User $user): JsonResponse
+    {
+        // Don't allow deactivating admin
+        if ($user->isAdmin()) {
+            return response()->json(['message' => 'Admin tidak bisa dinonaktifkan.'], 403);
+        }
+
+        $user->update(['is_active' => !$user->is_active]);
+
+        return response()->json([
+            'message' => $user->is_active ? 'User diaktifkan.' : 'User dinonaktifkan.',
+            'user' => $user->load('room'),
+        ]);
     }
 }

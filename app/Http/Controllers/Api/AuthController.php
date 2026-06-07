@@ -30,6 +30,12 @@ class AuthController extends Controller
             ]);
         }
 
+        if (!$user->is_active) {
+            throw ValidationException::withMessages([
+                'username' => ['Akun Anda telah dinonaktifkan. Hubungi administrator.'],
+            ]);
+        }
+
         // Revoke all existing tokens
         $user->tokens()->delete();
 
@@ -59,5 +65,43 @@ class AuthController extends Controller
     public function user(Request $request): JsonResponse
     {
         return response()->json($request->user()->load('room'));
+    }
+
+    /**
+     * Update authenticated user's profile (name & password).
+     */
+    public function updateProfile(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'password' => 'sometimes|nullable|string|min:6',
+            'current_password' => 'required_with:password|string',
+        ]);
+
+        // Verify current password if changing password
+        if (!empty($validated['password'])) {
+            if (!Hash::check($validated['current_password'], $user->password)) {
+                throw ValidationException::withMessages([
+                    'current_password' => ['Password lama tidak sesuai.'],
+                ]);
+            }
+            $validated['password'] = Hash::make($validated['password']);
+        }
+
+        unset($validated['current_password']);
+
+        // Remove empty password
+        if (isset($validated['password']) && !$validated['password']) {
+            unset($validated['password']);
+        }
+
+        $user->update($validated);
+
+        return response()->json([
+            'message' => 'Profil berhasil diperbarui.',
+            'user' => $user->load('room'),
+        ]);
     }
 }

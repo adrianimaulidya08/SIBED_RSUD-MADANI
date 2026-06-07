@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Sidebar.css';
 
@@ -53,8 +54,13 @@ const getRoomIcon = (category, name) => {
 
 export default function Sidebar({ rooms, selectedRoom, onSelectRoom, isOpen, onToggle, user }) {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const grouped = rooms.reduce((acc, room) => {
+  const filteredRooms = searchQuery.trim()
+    ? rooms.filter((r) => r.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    : rooms;
+
+  const grouped = filteredRooms.reduce((acc, room) => {
     if (!acc[room.category]) acc[room.category] = [];
     acc[room.category].push(room);
     return acc;
@@ -90,6 +96,24 @@ export default function Sidebar({ rooms, selectedRoom, onSelectRoom, isOpen, onT
             <span className="material-symbols-outlined nav-icon">grid_view</span>
             {isOpen && <span className="nav-label">Semua Ruangan</span>}
           </button>
+        )}
+
+        {isOpen && (
+          <div className="sidebar-search">
+            <span className="material-symbols-outlined sidebar-search-icon">search</span>
+            <input
+              type="text"
+              className="sidebar-search-input"
+              placeholder="Cari ruangan..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button className="sidebar-search-clear" onClick={() => setSearchQuery('')}>
+                <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>close</span>
+              </button>
+            )}
+          </div>
         )}
 
         {Object.entries(grouped).map(([category, categoryRooms]) => (
@@ -137,6 +161,24 @@ export default function Sidebar({ rooms, selectedRoom, onSelectRoom, isOpen, onT
             </button>
           </div>
         )}
+
+        {/* Profile Link */}
+        <div className="nav-category">
+          {isOpen && (
+            <div className="category-header">
+              <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>account_circle</span>
+              <span>Akun</span>
+            </div>
+          )}
+          <button
+            className="nav-item nav-profile"
+            onClick={() => navigate('/profile')}
+            title="Profil Saya"
+          >
+            <span className="material-symbols-outlined nav-icon">person</span>
+            {isOpen && <span className="nav-label">Profil Saya</span>}
+          </button>
+        </div>
       </nav>
     </aside>
   );

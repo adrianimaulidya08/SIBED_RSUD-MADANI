@@ -98,15 +98,6 @@ export default function Login() {
             )}
           </button>
         </form>
-
-        <div className="login-footer">
-          <p>Demo Accounts:</p>
-          <div className="demo-accounts">
-            <span><strong>admin</strong> / password</span>
-            <span><strong>icu</strong> / password</span>
-            <span><strong>mawar</strong> / password</span>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Auth
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
+    Route::put('/profile', [AuthController::class, 'updateProfile']);
 
     // Rooms & Beds
     Route::get('/rooms', [RoomController::class, 'index']);
@@ -53,5 +54,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/users', [AdminController::class, 'storeUser']);
         Route::put('/users/{user}', [AdminController::class, 'updateUser']);
         Route::delete('/users/{user}', [AdminController::class, 'destroyUser']);
+        Route::patch('/users/{user}/toggle-active', [AdminController::class, 'toggleUserActive']);
     });
 });

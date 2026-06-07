@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import BedCard from '../components/BedCard';
 import BedModal from '../components/BedModal';
@@ -12,6 +13,7 @@ import './Dashboard.css';
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
   const [beds, setBeds] = useState([]);
   const [summary, setSummary] = useState(null);
@@ -131,7 +133,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="dashboard-loading">
-        <div className="loading-card">
+        
           <div className="loading-pulse-container">
             <span className="material-symbols-outlined loading-pulse-icon">local_hospital</span>
             <div className="pulse-ring ring-1"></div>
@@ -140,9 +142,6 @@ export default function Dashboard() {
           <div className="loading-progress-bar">
             <div className="loading-progress-fill"></div>
           </div>
-          <p className="loading-text">Menghubungkan ke BedMonitor...</p>
-          <span className="loading-subtext">Mengunduh data ketersediaan kasur RSUD Madani</span>
-        </div>
       </div>
     );
   }
@@ -181,12 +180,14 @@ export default function Dashboard() {
               {theme === 'dark' ? '☀️' : '🌙'}
             </button>
             <div className="user-menu">
-              <div className="user-avatar">
-                {user.name.charAt(0).toUpperCase()}
-              </div>
-              <div className="user-info">
-                <span className="user-name">{user.name}</span>
-                <span className="user-role">{user.role}</span>
+              <div className="user-menu-link" onClick={() => navigate('/profile')} title="Buka Profil">
+                <div className="user-avatar">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <div className="user-info">
+                  <span className="user-name">{user.name}</span>
+                  <span className="user-role">{user.role}</span>
+                </div>
               </div>
               <button onClick={logout} className="logout-btn" title="Logout">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

@@ -18,60 +18,206 @@ class DatabaseSeeder extends Seeder
     {
         // ==================== ROOMS ====================
         $rooms = [
-            // General rooms
-            ['name' => 'Ruang Mawar', 'category' => 'general'],
-            ['name' => 'Ruang Melati', 'category' => 'general'],
-            ['name' => 'Ruang Anggrek', 'category' => 'general'],
-            // Intensive rooms
-            ['name' => 'ICU', 'category' => 'intensive'],
-            ['name' => 'PICU', 'category' => 'intensive'],
-            ['name' => 'NICU', 'category' => 'intensive'],
-            ['name' => 'ICCU', 'category' => 'intensive'],
-            // Psychiatric rooms
-            ['name' => 'Ruang Jiwa A', 'category' => 'psychiatric'],
-            ['name' => 'Ruang Jiwa B', 'category' => 'psychiatric'],
+
+            // ================= GENERAL =================
+            ['name' => 'Markisa', 'category' => 'general'],
+            ['name' => 'Melon', 'category' => 'general'],
+            ['name' => 'Jeruk', 'category' => 'general'],
+            ['name' => 'Rambutan', 'category' => 'general'],
+            ['name' => 'Cherry', 'category' => 'general'],
+            ['name' => 'Durian', 'category' => 'general'],
+            ['name' => 'Semangka', 'category' => 'general'],
+            ['name' => 'Lecy', 'category' => 'general'],
+
+            // ================= PSYCHIATRIC =================
+            ['name' => 'Salak', 'category' => 'psychiatric'],
+            ['name' => 'Serikaya', 'category' => 'psychiatric'],
+            ['name' => 'Anggur', 'category' => 'psychiatric'],
+            ['name' => 'Manggis', 'category' => 'psychiatric'],
+            ['name' => 'Sawo', 'category' => 'psychiatric'],
+            ['name' => 'Napa', 'category' => 'psychiatric'],
+
+            // ================= INTENSIVE =================
+            ['name' => 'NICU Tanpa Ventilator', 'category' => 'intensive'],
+            ['name' => 'NICU dengan Ventilator', 'category' => 'intensive'],
+            ['name' => 'PICU Tanpa Ventilator', 'category' => 'intensive'],
+            ['name' => 'PICU dengan Ventilator', 'category' => 'intensive'],
+            ['name' => 'ICU Tanpa Ventilator', 'category' => 'intensive'],
+            ['name' => 'ICU dengan Ventilator', 'category' => 'intensive'],
+            ['name' => 'ICCU Tanpa Ventilator', 'category' => 'intensive'],
+            ['name' => 'ICCU dengan Ventilator', 'category' => 'intensive'],
         ];
 
         $createdRooms = [];
+
         foreach ($rooms as $room) {
             $createdRooms[] = Room::create($room);
         }
 
-        // ==================== CLASSES FOR EACH ROOM ====================
-        $classNames = ['VIP', 'Kelas 1', 'Kelas 2', 'Kelas 3'];
-        $statuses = ['kosong', 'terisi', 'rencana_pulang', 'discharge_planning'];
+        // ==================== ROOM CLASS & BEDS ====================
+
+        $statuses = [
+            'kosong',
+            'terisi',
+            'rencana_pulang',
+            'discharge_planning'
+        ];
+
+        // Data jumlah bed sesuai tabel
+        $roomBedData = [
+
+            // ================= GENERAL =================
+            'Markisa' => [
+                'VIP A' => 7,
+            ],
+
+            'Melon' => [
+                'VIP B' => 4,
+                'Kelas I' => 6,
+                'Kelas II' => 6,
+                'Isolasi' => 2,
+            ],
+
+            'Jeruk' => [
+                'Kelas III' => 12,
+                'Isolasi' => 4,
+            ],
+
+            'Rambutan' => [
+                'Kelas III' => 16,
+                'Isolasi' => 4,
+            ],
+
+            'Cherry' => [
+                'Kelas III' => 12,
+                'Isolasi' => 3,
+            ],
+
+            'Durian' => [
+                'Kelas I' => 3,
+                'Kelas II' => 8,
+                'Kelas III' => 14,
+                'Isolasi' => 6,
+            ],
+
+            'Semangka' => [
+                'Kelas I' => 2,
+                'Kelas II' => 3,
+                'Kelas III' => 8,
+            ],
+
+            'Lecy' => [
+                'Kelas I' => 1,
+                'Kelas II' => 2,
+                'Isolasi' => 2,
+            ],
+
+            // ================= PSYCHIATRIC =================
+            'Salak' => [
+                'Kelas III' => 18,
+            ],
+
+            'Serikaya' => [
+                'Kelas III' => 17,
+            ],
+
+            'Anggur' => [
+                'Kelas I' => 2,
+                'Kelas II' => 3,
+                'Kelas III' => 7,
+                'Isolasi' => 3,
+            ],
+
+            'Manggis' => [
+                'Kelas III' => 16,
+            ],
+
+            'Sawo' => [
+                'Kelas III' => 22,
+            ],
+
+            'Napa' => [
+                'Kelas III' => 3,
+            ],
+
+            // ================= INTENSIVE =================
+            'NICU Tanpa Ventilator' => [
+                'Non Kelas' => 7,
+            ],
+
+            'NICU dengan Ventilator' => [
+                'Non Kelas' => 1,
+            ],
+
+            'PICU Tanpa Ventilator' => [
+                'Non Kelas' => 2,
+            ],
+
+            'PICU dengan Ventilator' => [
+                'Non Kelas' => 1,
+            ],
+
+            'ICU Tanpa Ventilator' => [
+                'Non Kelas' => 1,
+                'Isolasi' => 1,
+            ],
+
+            'ICU dengan Ventilator' => [
+                'Non Kelas' => 5,
+            ],
+
+            'ICCU Tanpa Ventilator' => [
+                'Non Kelas' => 2,
+            ],
+
+            'ICCU dengan Ventilator' => [
+                'Non Kelas' => 3,
+            ],
+        ];
 
         foreach ($createdRooms as $room) {
-            foreach ($classNames as $className) {
+
+            if (!isset($roomBedData[$room->name])) {
+                continue;
+            }
+
+            foreach ($roomBedData[$room->name] as $className => $bedCount) {
+
                 $class = RoomClass::create([
                     'room_id' => $room->id,
                     'name' => $className,
                 ]);
 
-                // Create beds for each class
-                $bedCount = match ($className) {
-                    'VIP' => 3,
-                    'Kelas 1' => 5,
-                    'Kelas 2' => 6,
-                    'Kelas 3' => 8,
-                };
-
                 for ($i = 1; $i <= $bedCount; $i++) {
-                    $prefix = strtoupper(substr(str_replace(['Ruang ', ' '], '', $room->name), 0, 3));
+
+                    $prefix = strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $room->name), 0, 4));
+
                     $classPrefix = match ($className) {
-                        'VIP' => 'V',
-                        'Kelas 1' => 'K1',
-                        'Kelas 2' => 'K2',
-                        'Kelas 3' => 'K3',
+                        'VIP A' => 'VIPA',
+                        'VIP B' => 'VIPB',
+                        'Kelas I' => 'K1',
+                        'Kelas II' => 'K2',
+                        'Kelas III' => 'K3',
+                        'Non Kelas' => 'NK',
+                        'Isolasi' => 'ISO',
+                        default => 'BED',
                     };
 
                     Bed::create([
                         'class_id' => $class->id,
                         'code' => "{$prefix}-{$classPrefix}-" . str_pad($i, 2, '0', STR_PAD_LEFT),
-                        'is_ventilator' => $room->category === 'intensive' && rand(0, 1),
-                        'is_isolation' => rand(0, 4) === 0, // ~20% chance
+
+                        // otomatis true jika nama ruangan ventilator
+                        'is_ventilator' => str_contains(
+                            strtolower($room->name),
+                            'ventilator'
+                        ),
+
+                        // otomatis true jika class isolasi
+                        'is_isolation' => $className === 'Isolasi',
+
                         'status' => $statuses[array_rand($statuses)],
-                        'deskripsi' => rand(0, 1) ? null : 'Catatan bed ' . $i,
+                        'deskripsi' => null,
                         'updated_by' => 'System',
                     ]);
                 }
@@ -79,7 +225,8 @@ class DatabaseSeeder extends Seeder
         }
 
         // ==================== USERS ====================
-        // Admin user
+
+        // ADMIN
         User::create([
             'name' => 'Administrator',
             'username' => 'admin',
@@ -88,10 +235,15 @@ class DatabaseSeeder extends Seeder
             'room_id' => null,
         ]);
 
-        // Intensive room users
+        // INTENSIVE USERS
         $intensiveRooms = Room::where('category', 'intensive')->get();
+
         foreach ($intensiveRooms as $room) {
-            $username = strtolower(str_replace(' ', '_', $room->name));
+
+            $username = strtolower(
+                str_replace([' ', '-'], '_', $room->name)
+            );
+
             User::create([
                 'name' => "Perawat {$room->name}",
                 'username' => $username,
@@ -101,10 +253,19 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // Regular room users
-        $regularRooms = Room::whereIn('category', ['general', 'psychiatric'])->get();
+        // GENERAL + PSYCHIATRIC USERS
+        // Ruangan jiwa menggunakan role regular
+        $regularRooms = Room::whereIn('category', [
+            'general',
+            'psychiatric'
+        ])->get();
+
         foreach ($regularRooms as $room) {
-            $username = strtolower(str_replace([' ', 'Ruang '], ['_', ''], $room->name));
+
+            $username = strtolower(
+                str_replace([' ', '-'], '_', $room->name)
+            );
+
             User::create([
                 'name' => "Perawat {$room->name}",
                 'username' => $username,
