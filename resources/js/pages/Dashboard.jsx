@@ -133,15 +133,11 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="dashboard-loading">
-        
-          <div className="loading-pulse-container">
-            <span className="material-symbols-outlined loading-pulse-icon">local_hospital</span>
-            <div className="pulse-ring ring-1"></div>
-            <div className="pulse-ring ring-2"></div>
-          </div>
-          <div className="loading-progress-bar">
-            <div className="loading-progress-fill"></div>
-          </div>
+        <div className="loading-pulse-container">
+          <span className="material-symbols-outlined loading-pulse-icon">local_hospital</span>
+          <div className="pulse-ring ring-1"></div>
+          <div className="pulse-ring ring-2"></div>
+        </div>
       </div>
     );
   }

@@ -3,6 +3,7 @@
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
+  height: 100vh;
   transition: width 0.3s ease, background-color 0.3s ease;
   overflow: hidden;
   position: relative;
@@ -261,10 +262,12 @@
     bottom: 0;
     z-index: 100;
   }
+
   .sidebar.closed {
     transform: translateX(-100%);
     width: 260px;
   }
+
   .sidebar.open {
     box-shadow: 20px 0 40px rgba(0, 0, 0, 0.5);
   }
