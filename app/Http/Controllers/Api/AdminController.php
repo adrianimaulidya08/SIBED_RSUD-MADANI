@@ -233,8 +233,12 @@ class AdminController extends Controller
      */
     public function destroyUser(User $user): JsonResponse
     {
+        if ($user->room_id) {
+            $user->room()->delete();
+        }
+
         $user->delete();
-        return response()->json(['message' => 'User berhasil dihapus.']);
+        return response()->json(['message' => 'User dan ruangan terkait berhasil dihapus.']);
     }
 
     /**
