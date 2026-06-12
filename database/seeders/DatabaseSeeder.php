@@ -38,14 +38,10 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Napa', 'category' => 'psychiatric'],
 
             // ================= INTENSIVE =================
-            ['name' => 'NICU Tanpa Ventilator', 'category' => 'intensive'],
-            ['name' => 'NICU dengan Ventilator', 'category' => 'intensive'],
-            ['name' => 'PICU Tanpa Ventilator', 'category' => 'intensive'],
-            ['name' => 'PICU dengan Ventilator', 'category' => 'intensive'],
-            ['name' => 'ICU Tanpa Ventilator', 'category' => 'intensive'],
-            ['name' => 'ICU dengan Ventilator', 'category' => 'intensive'],
-            ['name' => 'ICCU Tanpa Ventilator', 'category' => 'intensive'],
-            ['name' => 'ICCU dengan Ventilator', 'category' => 'intensive'],
+            ['name' => 'NICU', 'category' => 'intensive'],
+            ['name' => 'PICU', 'category' => 'intensive'],
+            ['name' => 'ICU', 'category' => 'intensive'],
+            ['name' => 'ICCU', 'category' => 'intensive'],
         ];
 
         $createdRooms = [];
@@ -141,37 +137,21 @@ class DatabaseSeeder extends Seeder
             ],
 
             // ================= INTENSIVE =================
-            'NICU Tanpa Ventilator' => [
-                'Non Kelas' => 7,
+            'NICU' => [
+                'Non Kelas' => 8,
             ],
 
-            'NICU dengan Ventilator' => [
-                'Non Kelas' => 1,
+            'PICU' => [
+                'Non Kelas' => 3,
             ],
 
-            'PICU Tanpa Ventilator' => [
-                'Non Kelas' => 2,
-            ],
-
-            'PICU dengan Ventilator' => [
-                'Non Kelas' => 1,
-            ],
-
-            'ICU Tanpa Ventilator' => [
-                'Non Kelas' => 1,
+            'ICU' => [
+                'Non Kelas' => 6,
                 'Isolasi' => 1,
             ],
 
-            'ICU dengan Ventilator' => [
+            'ICCU' => [
                 'Non Kelas' => 5,
-            ],
-
-            'ICCU Tanpa Ventilator' => [
-                'Non Kelas' => 2,
-            ],
-
-            'ICCU dengan Ventilator' => [
-                'Non Kelas' => 3,
             ],
         ];
 
